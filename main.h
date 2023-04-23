@@ -63,8 +63,13 @@ int get_flags(const char *format, int *i);
 int get_width(const char *format, int *i, va_list l);
 int get_precision(const char *format, int *i, va_list l);
 int get_size(const char *format, int *i);
+/* width handler */
+int handle_write_char(char c, char buff[],
+	int flag, int wid, int pre, int s);
+int write_number(int is_neg, int ind, char buff[],
+	int flag, int wid, int pre, int s);
 /****************** UTILS ******************/
 int is_digit(char);
-long int convert_size_number(long int num, int size);
+long int convert_size_number(long int num, int s);
 
 #endif /* MAIN_H */
