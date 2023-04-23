@@ -183,3 +183,4 @@ int print_percent(va_list typ, char buff[],
 	UNUSED(s);
 	return (write(1, "%%", 1));
 }
+

@@ -186,3 +186,4 @@ int print_rot13string(va_list typ, char buff[],
 	}
 	return (count);
 }
+
