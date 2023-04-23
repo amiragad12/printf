@@ -58,7 +58,13 @@ int print_int(va_list typ, char buff[],
 	int flag, int wid, int pre, int s);
 int print_binary(va_list typ, char buff[],
 	int flag, int wid, int pre, int s);
-    
+/* Funciotns to handle other specifiers */
+int get_flags(const char *format, int *i);
+int get_width(const char *format, int *i, va_list l);
+int get_precision(const char *format, int *i, va_list l);
+int get_size(const char *format, int *i);
+/****************** UTILS ******************/
+int is_digit(char);
 long int convert_size_number(long int num, int size);
 
 #endif /* MAIN_H */
