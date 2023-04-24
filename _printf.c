@@ -1,51 +1,37 @@
 #include "main.h"
 
 /**
- * _printf - prints and input into the standard output
- * @format: the format string
- * Return: number of bytes printed
+ * _printf - Receives the main string and all the necessary parameters to
+ * print a formated string
+ * @format: A string containing all the desired characters
+ * Return: A total count of the characters printed
  */
-
 int _printf(const char *format, ...)
-
 {
-	int sum = 0;
-	va_list ap;
-	char *c, *start;
+	int printed_chars;
+	conver_t f_list[] = {
+		{"c", print_char},
+		{"s", print_string},
+		{"%", print_percent},
+		{"d", print_integer},
+		{"i", print_integer},
+		{"b", print_binary},
+		{"r", print_reversed},
+		{"R", rot13},
+		{"u", unsigned_integer},
+		{"o", print_octal},
+		{"x", print_hex},
+		{"X", print_heX},
+		{NULL, NULL}
+	};
+	va_list arg_list;
 
-	params_t par = PARAMS_INIT;
-
-	va_start(ap, format);
-
-	if (!format || (format[0] == '%' && !format[1]))/* checking for NULL char */
+	if (format == NULL)
 		return (-1);
-	if (format[0] == '%' && format[1] == ' ' && !format[2])
-		return (-1);
-	for (c = (char *)format; *c; c++)
-	{
-		init_params(&par, ap);
-		if (*c != '%')/*checking for the % specifier*/
-		{
-			sum += _putchar(*c);
-			continue;
-		}
-		start = c;
-		c++;
-		while (get_flag(c, &par)) /* while char at p is flag character */
-		{
-			c++; /* next character */
-		}
-		c = get_width(c, &par, ap);
-		c = get_precision(c, &par, ap);
-		if (get_modifier(c, &par))
-			c++;
-		if (!get_specifier(c))
-			sum += print_from_to(start, c,
-					par.l_modifier || par.h_modifier ? c - 1 : 0);
-		else
-			sum += get_print_func(c, ap, &par);
-	}
-	_putchar(BUF_FLUSH);
-	va_end(ap);
-	return (sum);
+
+	va_start(arg_list, format);
+	/*Calling parser function*/
+	printed_chars = parser(format, f_list, arg_list);
+	va_end(arg_list);
+	return (printed_chars);
 }
